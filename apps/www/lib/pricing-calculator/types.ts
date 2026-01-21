@@ -113,10 +113,20 @@ export type RoiSummary = {
   hoursRecoveredPerYear: number
   valueRecoveredPerMonthUsd: number
   valueRecoveredPerYearUsd: number
-  breakdown: Record<TimeAllocationKey, { hoursBefore: number; hoursRecovered: number; reductionPct: number }>
+  breakdown: Record<
+    TimeAllocationKey,
+    { hoursBefore: number; hoursRecovered: number; reductionPct: number }
+  >
 }
 
-export type CompetitorKey = 'supabase' | 'firebase' | 'auth0' | 'clerk' | 'self_hosted' | 'convex' | 'aws'
+export type CompetitorKey =
+  | 'supabase'
+  | 'firebase'
+  | 'auth0'
+  | 'clerk'
+  | 'self_hosted'
+  | 'convex'
+  | 'aws'
 
 export type ComparisonPlatform = Exclude<CompetitorKey, 'supabase'>
 
@@ -144,4 +154,3 @@ export type ProjectionSeries = {
     savingsUsd: Record<ComparisonPlatform, number>
   }
 }
-

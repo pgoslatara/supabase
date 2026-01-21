@@ -34,7 +34,12 @@ function StatusIcon({ status }: { status: string }) {
   return <XCircle className="w-4 h-4 text-red-500" />
 }
 
-export default function SummaryPanel({ className, pricingReport, roiSummary, onTalkToSales }: Props) {
+export default function SummaryPanel({
+  className,
+  pricingReport,
+  roiSummary,
+  onTalkToSales,
+}: Props) {
   const { estimates, recommended } = pricingReport
 
   const recommendedEstimate = estimates[recommended.plan]
@@ -47,7 +52,8 @@ export default function SummaryPanel({ className, pricingReport, roiSummary, onT
       <div className="flex flex-col gap-1">
         <h3 className="text-foreground text-lg">Live cost summary</h3>
         <p className="text-foreground-lighter text-sm">
-          Recommended tier: <span className="text-foreground">{recommended.plan.toUpperCase()}</span>
+          Recommended tier:{' '}
+          <span className="text-foreground">{recommended.plan.toUpperCase()}</span>
         </p>
         {recommended.reasons.length > 0 && (
           <ul className="text-foreground-lighter text-sm list-disc pl-5 mt-2">
@@ -60,7 +66,10 @@ export default function SummaryPanel({ className, pricingReport, roiSummary, onT
 
       <div className="grid grid-cols-3 gap-2">
         {(['free', 'pro', 'team'] as const).map((plan) => (
-          <div key={plan} className={cn('border rounded-lg p-3', plan === recommended.plan && 'border-stronger')}>
+          <div
+            key={plan}
+            className={cn('border rounded-lg p-3', plan === recommended.plan && 'border-stronger')}
+          >
             <p className="text-foreground text-xs font-medium uppercase truncate">{plan}</p>
             <p className="text-foreground mt-1 font-mono text-sm" translate="no">
               {formatUsd(estimates[plan].totalMonthlyUsd)}
@@ -122,4 +131,3 @@ export default function SummaryPanel({ className, pricingReport, roiSummary, onT
     </Panel>
   )
 }
-

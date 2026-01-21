@@ -52,7 +52,9 @@ export default function Stage1ProjectBasics({
               </Select.Option>
             ))}
           </Select>
-          <p className="text-foreground-lighter text-xs">Are you starting with a fresh project or migrating?</p>
+          <p className="text-foreground-lighter text-xs">
+            Are you starting with a fresh project or migrating?
+          </p>
         </Panel>
       </div>
 
@@ -66,7 +68,9 @@ export default function Stage1ProjectBasics({
             value={String(inputs.teamSize)}
             onChange={(e: any) => set({ teamSize: Math.max(1, Number(e.target.value || 1)) })}
           />
-          <p className="text-foreground-lighter text-xs">Developers working on backend/infrastructure.</p>
+          <p className="text-foreground-lighter text-xs">
+            Developers working on backend/infrastructure.
+          </p>
         </Panel>
 
         <Panel outerClassName="w-full" innerClassName="p-4 md:p-5 flex flex-col gap-2">
@@ -78,7 +82,9 @@ export default function Stage1ProjectBasics({
             value={String(inputs.hourlyCostUsd)}
             onChange={(e: any) => set({ hourlyCostUsd: Math.max(0, Number(e.target.value || 0)) })}
           />
-          <p className="text-foreground-lighter text-xs">Default $150/hour (US). Used for time savings.</p>
+          <p className="text-foreground-lighter text-xs">
+            Default $150/hour (US). Used for time savings.
+          </p>
         </Panel>
       </div>
 
@@ -91,7 +97,9 @@ export default function Stage1ProjectBasics({
             onChange={(e) => set({ needCompliance: e.target.checked })}
             className={cn('h-4 w-4')}
           />
-          <span className="text-foreground-lighter text-sm">SOC2 / HIPAA / compliance requirements indicated</span>
+          <span className="text-foreground-lighter text-sm">
+            SOC2 / HIPAA / compliance requirements indicated
+          </span>
         </div>
       </Panel>
 
@@ -117,4 +125,3 @@ export default function Stage1ProjectBasics({
     </div>
   )
 }
-

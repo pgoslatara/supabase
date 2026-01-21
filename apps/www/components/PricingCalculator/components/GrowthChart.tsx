@@ -1,6 +1,15 @@
 'use client'
 
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts'
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend,
+} from 'recharts'
 import { cn } from 'ui'
 import Panel from '~/components/Panel'
 import type { ProjectionSeries } from '~/lib/pricing-calculator'
@@ -54,7 +63,10 @@ export default function GrowthChart({ title, subtitle, series, className }: Prop
                 border: '1px solid hsl(var(--border-default))',
               }}
               labelFormatter={(label) => `Month ${label}`}
-              formatter={(value: any, name: any) => [formatUsd(Number(value)), formatSeriesName(String(name))]}
+              formatter={(value: any, name: any) => [
+                formatUsd(Number(value)),
+                formatSeriesName(String(name)),
+              ]}
             />
             <Legend
               verticalAlign="bottom"
@@ -62,7 +74,9 @@ export default function GrowthChart({ title, subtitle, series, className }: Prop
               iconSize={8}
               wrapperStyle={{ paddingTop: 8, fontSize: 12, lineHeight: '16px' }}
               formatter={(value: any) => (
-                <span className="text-foreground-lighter text-xs">{formatSeriesName(String(value))}</span>
+                <span className="text-foreground-lighter text-xs">
+                  {formatSeriesName(String(value))}
+                </span>
               )}
             />
             <Line
@@ -87,4 +101,3 @@ function formatSeriesName(key: string) {
       return key
   }
 }
-

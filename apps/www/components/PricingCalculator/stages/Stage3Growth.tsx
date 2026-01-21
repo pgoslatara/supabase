@@ -55,7 +55,9 @@ export default function Stage3Growth({
             size="small"
             layout="vertical"
             value={String(inputs.dataGrowthGbPerMonth)}
-            onChange={(e: any) => set({ dataGrowthGbPerMonth: clamp(Number(e.target.value || 0), 0, 100_000) })}
+            onChange={(e: any) =>
+              set({ dataGrowthGbPerMonth: clamp(Number(e.target.value || 0), 0, 100_000) })
+            }
             className="max-w-[140px]"
           />
         </div>
@@ -75,7 +77,9 @@ export default function Stage3Growth({
           name="Projection months"
           layout="vertical"
           value={String(inputs.projectionMonths)}
-          onChange={(e: any) => set({ projectionMonths: Number(e.target.value) as ProjectionPeriodMonths })}
+          onChange={(e: any) =>
+            set({ projectionMonths: Number(e.target.value) as ProjectionPeriodMonths })
+          }
         >
           <Select.Option value="12">12 months</Select.Option>
           <Select.Option value="36">36 months</Select.Option>
@@ -89,4 +93,3 @@ export default function Stage3Growth({
     </div>
   )
 }
-

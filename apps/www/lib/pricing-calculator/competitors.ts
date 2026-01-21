@@ -9,7 +9,10 @@ export function getCompetitorSnapshot(): CompetitorSnapshot {
   return competitorSnapshot
 }
 
-function interpolateFromAnchors(mau: number, anchors: Record<string, number | null>): number | null {
+function interpolateFromAnchors(
+  mau: number,
+  anchors: Record<string, number | null>
+): number | null {
   const sorted = Object.keys(anchors)
     .map(Number)
     .filter((k) => anchors[String(k)] != null)
@@ -60,7 +63,9 @@ export function estimateFirebaseAuthMonthlyUsd(mau: number): number | null {
   return interpolateFromAnchors(mau, snapshot.monthly_cost_by_mau)
 }
 
-export function estimateFirebaseMonthlyUsd(inputs: Pick<CalculatorInputs, 'mau' | 'egressGb'>): number {
+export function estimateFirebaseMonthlyUsd(
+  inputs: Pick<CalculatorInputs, 'mau' | 'egressGb'>
+): number {
   // Use snapshot for Firebase Auth (Tier 1 providers)
   const authCost = estimateFirebaseAuthMonthlyUsd(inputs.mau) ?? 0
 
@@ -105,7 +110,7 @@ export function estimateConvexMonthlyUsd(
   // Storage: database + file storage
   const totalStorageGb = inputs.databaseSizeGb + inputs.storageSizeGb
   const storageOverage = Math.max(0, totalStorageGb - INCLUDED_STORAGE_GB)
-  const storageCost = storageOverage * 0.20 // $0.20 per GiB
+  const storageCost = storageOverage * 0.2 // $0.20 per GiB
 
   // Bandwidth (egress)
   const bandwidthOverage = Math.max(0, inputs.egressGb - INCLUDED_BANDWIDTH_GB)
@@ -115,7 +120,10 @@ export function estimateConvexMonthlyUsd(
 }
 
 export function estimateAwsMonthlyUsd(
-  inputs: Pick<CalculatorInputs, 'databaseSizeGb' | 'storageSizeGb' | 'egressGb' | 'projects' | 'mau'>
+  inputs: Pick<
+    CalculatorInputs,
+    'databaseSizeGb' | 'storageSizeGb' | 'egressGb' | 'projects' | 'mau'
+  >
 ): number {
   // AWS full stack estimate: RDS, S3, CloudFront, EC2, etc.
   // Assumes US East (N. Virginia) region pricing
@@ -152,7 +160,9 @@ export function estimateAwsMonthlyUsd(
   return roundUsd(rdsCost + s3StorageCost + cloudfrontCost + ec2Cost + otherServicesCost)
 }
 
-export function estimateCompetitorKeyForInfrastructure(infra: CalculatorInputs['currentInfrastructure']): CompetitorKey {
+export function estimateCompetitorKeyForInfrastructure(
+  infra: CalculatorInputs['currentInfrastructure']
+): CompetitorKey {
   switch (infra) {
     case 'firebase':
       return 'firebase'
@@ -172,7 +182,10 @@ export function estimateCompetitorMonthlyUsdForKey(
   inputs: CalculatorInputs
 ): { key: CompetitorKey; monthlyUsd: number } {
   if (key === 'firebase') {
-    return { key, monthlyUsd: estimateFirebaseMonthlyUsd({ mau: inputs.mau, egressGb: inputs.egressGb }) }
+    return {
+      key,
+      monthlyUsd: estimateFirebaseMonthlyUsd({ mau: inputs.mau, egressGb: inputs.egressGb }),
+    }
   }
 
   if (key === 'clerk') {
@@ -232,8 +245,13 @@ export function estimateCompetitorMonthlyUsdForKey(
   return { key, monthlyUsd: 0 }
 }
 
-export function estimateCompetitorMonthlyUsd(inputs: CalculatorInputs): { key: CompetitorKey; monthlyUsd: number } {
-  const key = estimateCompetitorKeyForInfrastructure(inputs.currentInfrastructure) as ComparisonPlatform
+export function estimateCompetitorMonthlyUsd(inputs: CalculatorInputs): {
+  key: CompetitorKey
+  monthlyUsd: number
+} {
+  const key = estimateCompetitorKeyForInfrastructure(
+    inputs.currentInfrastructure
+  ) as ComparisonPlatform
   return estimateCompetitorMonthlyUsdForKey(key, inputs)
 }
 
@@ -272,4 +290,3 @@ export function estimateAuthComparison(inputs: Pick<CalculatorInputs, 'mau'>) {
     },
   }
 }
-

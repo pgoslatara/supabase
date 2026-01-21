@@ -97,7 +97,8 @@ export default function PricingCalculator() {
               <div className="flex flex-col gap-1">
                 <h2 className="text-foreground text-2xl">Core calculator</h2>
                 <p className="text-foreground-lighter text-sm">
-                  Costs update as you adjust inputs. Use the share link to send your estimate to your team.
+                  Costs update as you adjust inputs. Use the share link to send your estimate to
+                  your team.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -109,7 +110,12 @@ export default function PricingCalculator() {
                 >
                   Copy link
                 </Button>
-                <Button asChild type="outline" size="tiny" iconRight={<ArrowUpRight className="w-4 h-4" />}>
+                <Button
+                  asChild
+                  type="outline"
+                  size="tiny"
+                  iconRight={<ArrowUpRight className="w-4 h-4" />}
+                >
                   <Link href="/contact/sales" target="_blank">
                     Talk to sales
                   </Link>
@@ -128,7 +134,11 @@ export default function PricingCalculator() {
             <Stage1ProjectBasics inputs={inputs} onChange={setInputs} />
 
             <div className="mt-4 flex justify-end">
-              <Button type="primary" iconRight={<ChevronRight className="w-4 h-4" />} onClick={() => goToStage('stage2')}>
+              <Button
+                type="primary"
+                iconRight={<ChevronRight className="w-4 h-4" />}
+                onClick={() => goToStage('stage2')}
+              >
                 Continue to usage estimation
               </Button>
             </div>
@@ -149,7 +159,11 @@ export default function PricingCalculator() {
               proEgressIncludedGb={250}
             />
             <div className="mt-4 flex justify-end">
-              <Button type="primary" iconRight={<ChevronRight className="w-4 h-4" />} onClick={() => goToStage('stage3')}>
+              <Button
+                type="primary"
+                iconRight={<ChevronRight className="w-4 h-4" />}
+                onClick={() => goToStage('stage3')}
+              >
                 Continue to growth projections
               </Button>
             </div>
@@ -171,7 +185,11 @@ export default function PricingCalculator() {
               />
             </div>
             <div className="mt-4 flex justify-end">
-              <Button type="primary" iconRight={<ChevronRight className="w-4 h-4" />} onClick={() => goToStage('stage4')}>
+              <Button
+                type="primary"
+                iconRight={<ChevronRight className="w-4 h-4" />}
+                onClick={() => goToStage('stage4')}
+              >
                 Continue to time allocation
               </Button>
             </div>
@@ -192,12 +210,17 @@ export default function PricingCalculator() {
             />
           </StagePanel>
 
-          <Panel outerClassName="w-full" innerClassName="p-5 md:p-6 flex flex-col gap-2" style={{ scrollMarginTop: 120 }}>
+          <Panel
+            outerClassName="w-full"
+            innerClassName="p-5 md:p-6 flex flex-col gap-2"
+            style={{ scrollMarginTop: 120 }}
+          >
             <div className="flex items-center justify-between gap-4">
               <div className="flex flex-col gap-1">
                 <h2 className="text-foreground text-2xl">Final report</h2>
                 <p className="text-foreground-lighter text-sm">
-                  A shareable, detailed breakdown combining pricing and ROI. Estimates are transparent and traceable.
+                  A shareable, detailed breakdown combining pricing and ROI. Estimates are
+                  transparent and traceable.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -210,7 +233,8 @@ export default function PricingCalculator() {
                   Copy link
                 </Button>
                 <InfoTooltip side="top" className="max-w-[260px]">
-                  Competitor pricing is sourced from official pricing pages (see report for sources and as-of dates).
+                  Competitor pricing is sourced from official pricing pages (see report for sources
+                  and as-of dates).
                 </InfoTooltip>
               </div>
             </div>
@@ -272,7 +296,12 @@ function StagePanel({
             <h3 className="text-foreground text-lg">{title}</h3>
             <p className="text-foreground-lighter text-sm">{description}</p>
           </div>
-          <div className={cn('text-foreground-lighter text-xs mt-1', active ? 'opacity-0' : 'opacity-100')}>
+          <div
+            className={cn(
+              'text-foreground-lighter text-xs mt-1',
+              active ? 'opacity-0' : 'opacity-100'
+            )}
+          >
             Click to edit
           </div>
         </div>
@@ -281,4 +310,3 @@ function StagePanel({
     </Panel>
   )
 }
-

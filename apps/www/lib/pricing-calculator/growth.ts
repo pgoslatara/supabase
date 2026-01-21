@@ -9,7 +9,14 @@ function compound(value: number, pct: number, periods: number) {
 }
 
 export function buildProjectionSeries(inputs: CalculatorInputs): ProjectionSeries {
-  const platforms: ComparisonPlatform[] = ['firebase', 'self_hosted', 'auth0', 'clerk', 'convex', 'aws']
+  const platforms: ComparisonPlatform[] = [
+    'firebase',
+    'self_hosted',
+    'auth0',
+    'clerk',
+    'convex',
+    'aws',
+  ]
 
   const points = Array.from({ length: inputs.projectionMonths }, (_, idx) => {
     const mau = Math.round(compound(inputs.mau, inputs.userGrowthRateMonthlyPct, idx))
@@ -80,4 +87,3 @@ export function buildProjectionSeries(inputs: CalculatorInputs): ProjectionSerie
     },
   }
 }
-

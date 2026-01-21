@@ -1,7 +1,16 @@
 'use client'
 
 import Link from 'next/link'
-import { Slider_Shadcn_, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, cn, Input } from 'ui'
+import {
+  Slider_Shadcn_,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  cn,
+  Input,
+} from 'ui'
 import { ChevronDown } from 'lucide-react'
 import { ComputeBadge } from 'ui-patterns/ComputeBadge'
 import { InfoTooltip } from 'ui-patterns/info-tooltip'
@@ -85,7 +94,9 @@ export default function Stage2UsageEstimation({
 }: {
   inputs: CalculatorInputs
   onChange: (next: CalculatorInputs) => void
-  authComparison: ReturnType<typeof import('~/lib/pricing-calculator/competitors').estimateAuthComparison>
+  authComparison: ReturnType<
+    typeof import('~/lib/pricing-calculator/competitors').estimateAuthComparison
+  >
   freePlanEgressLimitGb: number
   proEgressIncludedGb: number
 }) {
@@ -105,7 +116,9 @@ export default function Stage2UsageEstimation({
               size="small"
               layout="vertical"
               value={String(inputs.databaseSizeGb)}
-              onChange={(e: any) => set({ databaseSizeGb: clamp(Number(e.target.value || 0.5), 0.5, 10_000) })}
+              onChange={(e: any) =>
+                set({ databaseSizeGb: clamp(Number(e.target.value || 0.5), 0.5, 10_000) })
+              }
               className="max-w-[120px]"
             />
           </div>
@@ -129,7 +142,9 @@ export default function Stage2UsageEstimation({
               size="small"
               layout="vertical"
               value={String(inputs.storageSizeGb)}
-              onChange={(e: any) => set({ storageSizeGb: clamp(Number(e.target.value || 0), 0, 100_000) })}
+              onChange={(e: any) =>
+                set({ storageSizeGb: clamp(Number(e.target.value || 0), 0, 100_000) })
+              }
               className="max-w-[120px]"
             />
           </div>
@@ -196,7 +211,9 @@ export default function Stage2UsageEstimation({
               size="small"
               layout="vertical"
               value={String(inputs.mau)}
-              onChange={(e: any) => set({ mau: clamp(Math.round(Number(e.target.value || 0)), 0, 50_000_000) })}
+              onChange={(e: any) =>
+                set({ mau: clamp(Math.round(Number(e.target.value || 0)), 0, 50_000_000) })
+              }
               className="max-w-[140px]"
             />
           </div>
@@ -213,7 +230,11 @@ export default function Stage2UsageEstimation({
           <p className="text-foreground text-sm font-medium">Authentication needs</p>
           <div className="flex flex-col gap-2">
             <label className="flex items-center gap-2 text-sm text-foreground-lighter">
-              <input type="checkbox" checked={inputs.needSso} onChange={(e) => set({ needSso: e.target.checked })} />
+              <input
+                type="checkbox"
+                checked={inputs.needSso}
+                onChange={(e) => set({ needSso: e.target.checked })}
+              />
               Need SSO/SAML?
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground-lighter">
@@ -234,7 +255,8 @@ export default function Stage2UsageEstimation({
       <CalloutCard title="Key consideration">
         <div className="flex flex-col gap-3">
           <div className="text-sm text-foreground-lighter">
-            Building your own authentication is error prone and complex. It’s costly to build and costly to maintain.{' '}
+            Building your own authentication is error prone and complex. It’s costly to build and
+            costly to maintain.{' '}
             <Link
               href="https://supabase.com/blog/supabase-auth-build-vs-buy"
               target="_blank"
@@ -261,7 +283,13 @@ export default function Stage2UsageEstimation({
                 layout="vertical"
                 value={String(inputs.realtimePeakConnections)}
                 onChange={(e: any) =>
-                  set({ realtimePeakConnections: clamp(Math.round(Number(e.target.value || 0)), 0, 10_000_000) })
+                  set({
+                    realtimePeakConnections: clamp(
+                      Math.round(Number(e.target.value || 0)),
+                      0,
+                      10_000_000
+                    ),
+                  })
                 }
                 className="max-w-[140px]"
               />
@@ -284,7 +312,13 @@ export default function Stage2UsageEstimation({
                 layout="vertical"
                 value={String(inputs.realtimeMessages)}
                 onChange={(e: any) =>
-                  set({ realtimeMessages: clamp(Math.round(Number(e.target.value || 0)), 0, 10_000_000_000) })
+                  set({
+                    realtimeMessages: clamp(
+                      Math.round(Number(e.target.value || 0)),
+                      0,
+                      10_000_000_000
+                    ),
+                  })
                 }
                 className="max-w-[160px]"
               />
@@ -311,7 +345,13 @@ export default function Stage2UsageEstimation({
               layout="vertical"
               value={String(inputs.edgeInvocations)}
               onChange={(e: any) =>
-                set({ edgeInvocations: clamp(Math.round(Number(e.target.value || 0)), 0, 10_000_000_000) })
+                set({
+                  edgeInvocations: clamp(
+                    Math.round(Number(e.target.value || 0)),
+                    0,
+                    10_000_000_000
+                  ),
+                })
               }
               className="max-w-[160px]"
             />
@@ -367,7 +407,8 @@ export default function Stage2UsageEstimation({
 
         <div className="flex items-center gap-2 text-foreground-lighter text-sm">
           <InfoTooltip side="top" className="max-w-[280px]">
-            Compute is billed hourly. Temporary upgrades for migrations or traffic spikes cost only for the hours used.
+            Compute is billed hourly. Temporary upgrades for migrations or traffic spikes cost only
+            for the hours used.
           </InfoTooltip>
           <span>Compute is billed hourly.</span>
         </div>
@@ -407,4 +448,3 @@ export default function Stage2UsageEstimation({
     </div>
   )
 }
-

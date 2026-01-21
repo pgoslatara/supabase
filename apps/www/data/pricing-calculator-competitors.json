@@ -11,9 +11,7 @@
   "providers": {
     "auth0": {
       "plan_name": "Essentials / Professional / Enterprise (interactive pricing by MAU; exact price for 10k/50k/100k not derivable from page contents)",
-      "source_urls": [
-        "https://auth0.com/pricing"
-      ],
+      "source_urls": ["https://auth0.com/pricing"],
       "monthly_cost_by_mau": {
         "10000": null,
         "50000": null,
@@ -23,9 +21,7 @@
     },
     "clerk": {
       "plan_name": "Pro plan",
-      "source_urls": [
-        "https://clerk.com/pricing"
-      ],
+      "source_urls": ["https://clerk.com/pricing"],
       "monthly_cost_by_mau": {
         "10000": 25,
         "50000": 825,
@@ -49,9 +45,7 @@
     },
     "convex": {
       "plan_name": "Professional plan (usage-based pricing)",
-      "source_urls": [
-        "https://www.convex.dev/pricing"
-      ],
+      "source_urls": ["https://www.convex.dev/pricing"],
       "monthly_cost_by_mau": {
         "10000": null,
         "50000": null,

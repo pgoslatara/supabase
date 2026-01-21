@@ -13,7 +13,10 @@ export default function HowCalculated({
   return (
     <Collapsible>
       <Collapsible.Trigger asChild>
-        <button type="button" className="text-sm text-foreground-lighter hover:text-foreground flex items-center gap-2">
+        <button
+          type="button"
+          className="text-sm text-foreground-lighter hover:text-foreground flex items-center gap-2"
+        >
           <ChevronUp className="data-open-parent:rotate-0 data-closed-parent:rotate-180 h-4 w-4 transition" />
           {title}
         </button>
@@ -28,4 +31,3 @@ export default function HowCalculated({
     </Collapsible>
   )
 }
-

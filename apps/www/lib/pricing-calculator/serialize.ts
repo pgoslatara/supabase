@@ -1,6 +1,11 @@
 import { pricingCalculatorVersion } from 'shared-data'
 
-import type { CalculatorInputs, ComputeTier, CurrentInfrastructure, ProjectionPeriodMonths } from './types'
+import type {
+  CalculatorInputs,
+  ComputeTier,
+  CurrentInfrastructure,
+  ProjectionPeriodMonths,
+} from './types'
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))
 
@@ -62,16 +67,22 @@ export function encodeInputsToSearchParams(inputs: CalculatorInputs): URLSearchP
   p.set('data_growth', String(inputs.dataGrowthGbPerMonth))
   p.set('months', String(inputs.projectionMonths))
 
-  if (inputs.timeAllocationOverrides?.auth != null) p.set('ta_auth', String(inputs.timeAllocationOverrides.auth))
+  if (inputs.timeAllocationOverrides?.auth != null)
+    p.set('ta_auth', String(inputs.timeAllocationOverrides.auth))
   if (inputs.timeAllocationOverrides?.database != null)
     p.set('ta_db', String(inputs.timeAllocationOverrides.database))
-  if (inputs.timeAllocationOverrides?.api != null) p.set('ta_api', String(inputs.timeAllocationOverrides.api))
-  if (inputs.timeAllocationOverrides?.devops != null) p.set('ta_devops', String(inputs.timeAllocationOverrides.devops))
+  if (inputs.timeAllocationOverrides?.api != null)
+    p.set('ta_api', String(inputs.timeAllocationOverrides.api))
+  if (inputs.timeAllocationOverrides?.devops != null)
+    p.set('ta_devops', String(inputs.timeAllocationOverrides.devops))
 
   return p
 }
 
-export function decodeInputsFromSearchParams(params: URLSearchParams, fallback: CalculatorInputs = getDefaultInputs()): {
+export function decodeInputsFromSearchParams(
+  params: URLSearchParams,
+  fallback: CalculatorInputs = getDefaultInputs()
+): {
   inputs: CalculatorInputs
   versionMatch: boolean
 } {
@@ -81,7 +92,8 @@ export function decodeInputsFromSearchParams(params: URLSearchParams, fallback: 
   const inputs: CalculatorInputs = {
     ...fallback,
     projects: clamp(Math.round(toNum(params.get('projects'), fallback.projects)), 1, 50),
-    currentInfrastructure: (params.get('infra') as CurrentInfrastructure) ?? fallback.currentInfrastructure,
+    currentInfrastructure:
+      (params.get('infra') as CurrentInfrastructure) ?? fallback.currentInfrastructure,
     teamSize: clamp(Math.round(toNum(params.get('team'), fallback.teamSize)), 1, 500),
     hourlyCostUsd: clamp(toNum(params.get('hourly'), fallback.hourlyCostUsd), 0, 1000),
     needCompliance: toBool(params.get('compliance')),
@@ -92,24 +104,54 @@ export function decodeInputsFromSearchParams(params: URLSearchParams, fallback: 
     mau: clamp(Math.round(toNum(params.get('mau'), fallback.mau)), 0, 50_000_000),
     needSso: toBool(params.get('sso')),
     needPhoneMfa: toBool(params.get('phone_mfa')),
-    realtimePeakConnections: clamp(Math.round(toNum(params.get('rtc'), fallback.realtimePeakConnections)), 0, 10_000_000),
-    realtimeMessages: clamp(Math.round(toNum(params.get('rtm'), fallback.realtimeMessages)), 0, 10_000_000_000),
-    edgeInvocations: clamp(Math.round(toNum(params.get('edge'), fallback.edgeInvocations)), 0, 10_000_000_000),
+    realtimePeakConnections: clamp(
+      Math.round(toNum(params.get('rtc'), fallback.realtimePeakConnections)),
+      0,
+      10_000_000
+    ),
+    realtimeMessages: clamp(
+      Math.round(toNum(params.get('rtm'), fallback.realtimeMessages)),
+      0,
+      10_000_000_000
+    ),
+    edgeInvocations: clamp(
+      Math.round(toNum(params.get('edge'), fallback.edgeInvocations)),
+      0,
+      10_000_000_000
+    ),
     computeTier: (params.get('compute') as ComputeTier) ?? fallback.computeTier,
 
-    userGrowthRateMonthlyPct: clamp(toNum(params.get('growth'), fallback.userGrowthRateMonthlyPct), 0, 50),
-    dataGrowthGbPerMonth: clamp(toNum(params.get('data_growth'), fallback.dataGrowthGbPerMonth), 0, 100_000),
-    projectionMonths: (Math.round(toNum(params.get('months'), fallback.projectionMonths)) as ProjectionPeriodMonths) ?? fallback.projectionMonths,
+    userGrowthRateMonthlyPct: clamp(
+      toNum(params.get('growth'), fallback.userGrowthRateMonthlyPct),
+      0,
+      50
+    ),
+    dataGrowthGbPerMonth: clamp(
+      toNum(params.get('data_growth'), fallback.dataGrowthGbPerMonth),
+      0,
+      100_000
+    ),
+    projectionMonths:
+      (Math.round(
+        toNum(params.get('months'), fallback.projectionMonths)
+      ) as ProjectionPeriodMonths) ?? fallback.projectionMonths,
     // Note: we intentionally ignore any `compare` param in v1 multi-compare mode.
 
     timeAllocationOverrides: {
-      auth: params.get('ta_auth') ? toNum(params.get('ta_auth'), fallback.timeAllocationOverrides?.auth ?? 0) : undefined,
-      database: params.get('ta_db') ? toNum(params.get('ta_db'), fallback.timeAllocationOverrides?.database ?? 0) : undefined,
-      api: params.get('ta_api') ? toNum(params.get('ta_api'), fallback.timeAllocationOverrides?.api ?? 0) : undefined,
-      devops: params.get('ta_devops') ? toNum(params.get('ta_devops'), fallback.timeAllocationOverrides?.devops ?? 0) : undefined,
+      auth: params.get('ta_auth')
+        ? toNum(params.get('ta_auth'), fallback.timeAllocationOverrides?.auth ?? 0)
+        : undefined,
+      database: params.get('ta_db')
+        ? toNum(params.get('ta_db'), fallback.timeAllocationOverrides?.database ?? 0)
+        : undefined,
+      api: params.get('ta_api')
+        ? toNum(params.get('ta_api'), fallback.timeAllocationOverrides?.api ?? 0)
+        : undefined,
+      devops: params.get('ta_devops')
+        ? toNum(params.get('ta_devops'), fallback.timeAllocationOverrides?.devops ?? 0)
+        : undefined,
     },
   }
 
   return { inputs, versionMatch }
 }
-

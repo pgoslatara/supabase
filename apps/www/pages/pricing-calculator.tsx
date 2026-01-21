@@ -15,7 +15,7 @@ export default function PricingCalculatorPage() {
 
   const meta_title = 'Pricing Calculator | Supabase'
   const meta_description =
-    "Estimate your Supabase bill in 60 seconds. Compare alternatives and generate a shareable report you can send to your team."
+    'Estimate your Supabase bill in 60 seconds. Compare alternatives and generate a shareable report you can send to your team.'
 
   return (
     <DefaultLayout>
@@ -42,10 +42,17 @@ export default function PricingCalculatorPage() {
             Auth0, and self-hosted alternatives.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-            <Button asChild size="large" type="primary" iconRight={<ArrowDownIcon className="w-4" />}>
+            <Button
+              asChild
+              size="large"
+              type="primary"
+              iconRight={<ArrowDownIcon className="w-4" />}
+            >
               <Link href="#calculator">Calculate my costs</Link>
             </Button>
-            <p className="text-foreground-lighter text-sm">No signup required. Get a shareable report.</p>
+            <p className="text-foreground-lighter text-sm">
+              No signup required. Get a shareable report.
+            </p>
           </div>
         </div>
       </SectionContainer>
@@ -60,26 +67,44 @@ export default function PricingCalculatorPage() {
             <h2 className="text-foreground text-3xl">Four stages to your estimate</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4">
-            <Panel hasActiveOnHover outerClassName="h-full" innerClassName="p-5 flex flex-col gap-2">
+            <Panel
+              hasActiveOnHover
+              outerClassName="h-full"
+              innerClassName="p-5 flex flex-col gap-2"
+            >
               <p className="text-foreground text-sm font-medium">Stage 1: Project basics</p>
               <p className="text-foreground-lighter text-sm">
                 Number of environments, team size, and where you&apos;re coming from.
               </p>
             </Panel>
-            <Panel hasActiveOnHover outerClassName="h-full" innerClassName="p-5 flex flex-col gap-2">
+            <Panel
+              hasActiveOnHover
+              outerClassName="h-full"
+              innerClassName="p-5 flex flex-col gap-2"
+            >
               <p className="text-foreground text-sm font-medium">Stage 2: Usage estimation</p>
               <p className="text-foreground-lighter text-sm">
                 Database size, monthly users, bandwidth, and realtime needs.
               </p>
             </Panel>
-            <Panel hasActiveOnHover outerClassName="h-full" innerClassName="p-5 flex flex-col gap-2">
+            <Panel
+              hasActiveOnHover
+              outerClassName="h-full"
+              innerClassName="p-5 flex flex-col gap-2"
+            >
               <p className="text-foreground text-sm font-medium">Stage 3: Growth projections</p>
               <p className="text-foreground-lighter text-sm">
                 See how costs change over 12 or 36 months as you grow.
               </p>
             </Panel>
-            <Panel hasActiveOnHover outerClassName="h-full" innerClassName="p-5 flex flex-col gap-2">
-              <p className="text-foreground text-sm font-medium">Stage 4: Time allocation (optional)</p>
+            <Panel
+              hasActiveOnHover
+              outerClassName="h-full"
+              innerClassName="p-5 flex flex-col gap-2"
+            >
+              <p className="text-foreground text-sm font-medium">
+                Stage 4: Time allocation (optional)
+              </p>
               <p className="text-foreground-lighter text-sm">
                 Add detail to value analysis by estimating time spent on infrastructure today.
               </p>
@@ -94,4 +119,3 @@ export default function PricingCalculatorPage() {
     </DefaultLayout>
   )
 }
-

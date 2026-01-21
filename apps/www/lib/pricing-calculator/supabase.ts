@@ -2,7 +2,14 @@ import { supabasePricingModel } from 'shared-data'
 import type { PricingCalculatorPlan } from 'shared-data'
 
 import pricingAddOn from '~/data/PricingAddOnTable.json'
-import type { CalculatorInputs, ComputeTier, FitStatus, PlanEstimate, PricingReport, UsageDimension } from './types'
+import type {
+  CalculatorInputs,
+  ComputeTier,
+  FitStatus,
+  PlanEstimate,
+  PricingReport,
+  UsageDimension,
+} from './types'
 
 const roundUsd = (value: number) => Math.round((value + Number.EPSILON) * 100) / 100
 
@@ -61,7 +68,8 @@ export function calculatePlanEstimate(
 
   // Projects (Free plan limit)
   if (plan === 'free' && planModel.included.activeProjectsLimit) {
-    fits.projects = inputs.projects <= planModel.included.activeProjectsLimit ? 'ok' : 'limit_exceeded'
+    fits.projects =
+      inputs.projects <= planModel.included.activeProjectsLimit ? 'ok' : 'limit_exceeded'
   }
 
   // Compliance requirement (prototype: maps to Team/Enterprise signals)
@@ -79,9 +87,11 @@ export function calculatePlanEstimate(
 
   // Storage (org quota)
   if (plan === 'free') {
-    fits.storage_size = inputs.storageSizeGb <= planModel.included.storageSizeGbPerOrg ? 'ok' : 'limit_exceeded'
+    fits.storage_size =
+      inputs.storageSizeGb <= planModel.included.storageSizeGbPerOrg ? 'ok' : 'limit_exceeded'
   } else {
-    fits.storage_size = inputs.storageSizeGb <= planModel.included.storageSizeGbPerOrg ? 'ok' : 'overage'
+    fits.storage_size =
+      inputs.storageSizeGb <= planModel.included.storageSizeGbPerOrg ? 'ok' : 'overage'
   }
 
   // Egress (org quota)
@@ -121,7 +131,9 @@ export function calculatePlanEstimate(
         : 'limit_exceeded'
   } else {
     fits.realtime_peak_connections =
-      inputs.realtimePeakConnections <= planModel.included.realtimePeakConnectionsPerOrg ? 'ok' : 'overage'
+      inputs.realtimePeakConnections <= planModel.included.realtimePeakConnectionsPerOrg
+        ? 'ok'
+        : 'overage'
   }
 
   // Realtime messages
@@ -129,7 +141,8 @@ export function calculatePlanEstimate(
     fits.realtime_messages =
       inputs.realtimeMessages <= planModel.included.realtimeMessagesPerOrg ? 'ok' : 'limit_exceeded'
   } else {
-    fits.realtime_messages = inputs.realtimeMessages <= planModel.included.realtimeMessagesPerOrg ? 'ok' : 'overage'
+    fits.realtime_messages =
+      inputs.realtimeMessages <= planModel.included.realtimeMessagesPerOrg ? 'ok' : 'overage'
   }
 
   // Edge invocations
@@ -137,7 +150,8 @@ export function calculatePlanEstimate(
     fits.edge_invocations =
       inputs.edgeInvocations <= planModel.included.edgeInvocationsPerOrg ? 'ok' : 'limit_exceeded'
   } else {
-    fits.edge_invocations = inputs.edgeInvocations <= planModel.included.edgeInvocationsPerOrg ? 'ok' : 'overage'
+    fits.edge_invocations =
+      inputs.edgeInvocations <= planModel.included.edgeInvocationsPerOrg ? 'ok' : 'overage'
   }
 
   const lineItems: PlanEstimate['lineItems'] = []
@@ -226,7 +240,10 @@ export function calculatePlanEstimate(
       lineItems.push({
         key: 'mau_overage',
         monthlyUsd: cost,
-        details: [`${over.toLocaleString()} MAU over`, `$${planModel.overage.mauUsdPerMau} per MAU`],
+        details: [
+          `${over.toLocaleString()} MAU over`,
+          `$${planModel.overage.mauUsdPerMau} per MAU`,
+        ],
       })
     }
   }
@@ -250,13 +267,19 @@ export function calculatePlanEstimate(
 
   // Realtime peak connections overage
   if (plan !== 'free') {
-    const over = Math.max(0, inputs.realtimePeakConnections - planModel.included.realtimePeakConnectionsPerOrg)
+    const over = Math.max(
+      0,
+      inputs.realtimePeakConnections - planModel.included.realtimePeakConnectionsPerOrg
+    )
     const cost = roundUsd((over / 1000) * planModel.overage.realtimePeakConnectionsUsdPer1000)
     if (cost > 0) {
       lineItems.push({
         key: 'realtime_peak_connections_overage',
         monthlyUsd: cost,
-        details: [`${over.toLocaleString()} over`, `$${planModel.overage.realtimePeakConnectionsUsdPer1000} per 1000`],
+        details: [
+          `${over.toLocaleString()} over`,
+          `$${planModel.overage.realtimePeakConnectionsUsdPer1000} per 1000`,
+        ],
       })
     }
   }
@@ -270,7 +293,7 @@ export function calculatePlanEstimate(
         key: 'realtime_messages_overage',
         monthlyUsd: cost,
         details: [
-          `${Math.round(over / 1_000_000 * 100) / 100} million over`,
+          `${Math.round((over / 1_000_000) * 100) / 100} million over`,
           `$${planModel.overage.realtimeMessagesUsdPerMillion} per million`,
         ],
       })
@@ -286,7 +309,7 @@ export function calculatePlanEstimate(
         key: 'edge_invocations_overage',
         monthlyUsd: cost,
         details: [
-          `${Math.round(over / 1_000_000 * 100) / 100} million over`,
+          `${Math.round((over / 1_000_000) * 100) / 100} million over`,
           `$${planModel.overage.edgeInvocationsUsdPerMillion} per million`,
         ],
       })
@@ -297,7 +320,8 @@ export function calculatePlanEstimate(
   if (plan !== 'free' && inputs.needPhoneMfa) {
     const addon = supabasePricingModel.addons.phoneMfa
     const cost = roundUsd(
-      addon.monthlyUsdFirstProject + Math.max(0, inputs.projects - 1) * addon.monthlyUsdPerAdditionalProject
+      addon.monthlyUsdFirstProject +
+        Math.max(0, inputs.projects - 1) * addon.monthlyUsdPerAdditionalProject
     )
     if (cost > 0) {
       lineItems.push({
@@ -357,7 +381,8 @@ export function calculatePricingReport(inputs: CalculatorInputs): PricingReport 
     reasons.push('Pro plan is the lowest tier that supports your inputs.')
   }
   if (recommendedPlan === 'team') {
-    if (inputs.needCompliance) reasons.push('Your compliance requirements require Team tier features.')
+    if (inputs.needCompliance)
+      reasons.push('Your compliance requirements require Team tier features.')
     reasons.push('Team plan is the lowest tier that supports your inputs.')
   }
 
@@ -370,4 +395,3 @@ export function calculatePricingReport(inputs: CalculatorInputs): PricingReport 
     },
   }
 }
-

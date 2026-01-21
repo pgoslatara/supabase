@@ -18,7 +18,9 @@ export function getDefaultTimeAllocation(teamSize: number): TimeAllocation {
   }
 }
 
-export function calculateRoiSummary(inputs: Pick<CalculatorInputs, 'teamSize' | 'hourlyCostUsd' | 'timeAllocationOverrides'>): RoiSummary {
+export function calculateRoiSummary(
+  inputs: Pick<CalculatorInputs, 'teamSize' | 'hourlyCostUsd' | 'timeAllocationOverrides'>
+): RoiSummary {
   const defaults = getDefaultTimeAllocation(inputs.teamSize)
   const merged: TimeAllocation = {
     auth: inputs.timeAllocationOverrides?.auth ?? defaults.auth,
@@ -71,4 +73,3 @@ export function calculateRoiSummary(inputs: Pick<CalculatorInputs, 'teamSize' | 
     },
   }
 }
-

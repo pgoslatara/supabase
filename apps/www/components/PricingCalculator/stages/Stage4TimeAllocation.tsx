@@ -56,10 +56,11 @@ export default function Stage4TimeAllocation({
               return setOverride(key, Math.max(0, Number(raw)))
             }}
           />
-          <p className="text-foreground-lighter text-xs">Optional override. Leave blank to use smart defaults.</p>
+          <p className="text-foreground-lighter text-xs">
+            Optional override. Leave blank to use smart defaults.
+          </p>
         </Panel>
       ))}
     </div>
   )
 }
-

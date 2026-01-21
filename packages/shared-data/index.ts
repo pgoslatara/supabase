@@ -28,4 +28,8 @@ export {
 }
 export type { AWS_REGIONS_KEYS, CloudProvider, Region } from './regions'
 export type { PricingInformation } from './plans'
-export type { PricingCalculatorPlan, SupabasePricingModel, UsageDimensionKey } from './pricing-calculator'
+export type {
+  PricingCalculatorPlan,
+  SupabasePricingModel,
+  UsageDimensionKey,
+} from './pricing-calculator'

@@ -10,7 +10,9 @@ import GrowthChart from './GrowthChart'
 import HowCalculated from './HowCalculated'
 import { formatNumber, formatUsd } from './format'
 
-type AuthComparison = ReturnType<typeof import('~/lib/pricing-calculator/competitors').estimateAuthComparison>
+type AuthComparison = ReturnType<
+  typeof import('~/lib/pricing-calculator/competitors').estimateAuthComparison
+>
 
 export default function ReportView({
   pricingReport,
@@ -50,7 +52,8 @@ export default function ReportView({
             <p className="text-foreground-lighter text-sm">Recommended tier</p>
             <p className="text-foreground text-xl font-mono">{recommended.toUpperCase()}</p>
             <p className="text-foreground-lighter text-sm mt-1">
-              Estimated monthly cost: <span className="text-foreground">{formatUsd(estimate.totalMonthlyUsd)}</span>
+              Estimated monthly cost:{' '}
+              <span className="text-foreground">{formatUsd(estimate.totalMonthlyUsd)}</span>
             </p>
             <p className="text-foreground-lighter text-xs mt-2">
               This estimate is based on Supabase pricing and the inputs you provided.
@@ -65,14 +68,19 @@ export default function ReportView({
           </div>
         </div>
         <p className="text-foreground-lighter text-sm">
-          Notes: <span className="text-foreground">{pricingReport.recommended.reasons[0] ?? ''}</span>
+          Notes:{' '}
+          <span className="text-foreground">{pricingReport.recommended.reasons[0] ?? ''}</span>
         </p>
       </Panel>
 
       {/* Projected Costs over Time */}
       <Panel outerClassName="w-full" innerClassName="p-5 md:p-6 flex flex-col gap-3">
         <h3 className="text-foreground text-lg">Projected costs over time</h3>
-        <GrowthChart title="Projected costs over time" subtitle="Supabase estimate based on your inputs" series={projectionSeries} />
+        <GrowthChart
+          title="Projected costs over time"
+          subtitle="Supabase estimate based on your inputs"
+          series={projectionSeries}
+        />
         <HowCalculated
           items={[
             'Each month, we grow MAU and data according to your Stage 3 inputs',
@@ -125,35 +133,74 @@ export default function ReportView({
         <div className="border rounded-lg p-4 flex flex-col gap-4">
           <div>
             <p className="text-foreground-lighter text-sm">Time reallocation estimate</p>
-            <p className="text-foreground text-xl font-mono">{formatNumber(roiSummary.hoursRecoveredPerMonth)} hrs/mo</p>
+            <p className="text-foreground text-xl font-mono">
+              {formatNumber(roiSummary.hoursRecoveredPerMonth)} hrs/mo
+            </p>
             <p className="text-foreground-lighter text-sm mt-1">
               That&apos;s {formatNumber(roiSummary.hoursRecoveredPerYear)} hours/year, valued at{' '}
-              <span className="text-foreground">{formatUsd(roiSummary.valueRecoveredPerYearUsd)}</span> using your hourly rate.
+              <span className="text-foreground">
+                {formatUsd(roiSummary.valueRecoveredPerYearUsd)}
+              </span>{' '}
+              using your hourly rate.
             </p>
           </div>
           <div className="border-t pt-4 flex flex-col gap-3">
             <p className="text-foreground text-sm font-medium">How we calculate this</p>
             <div className="text-foreground-lighter text-sm space-y-2">
               <p>
-                <strong className="text-foreground">Step 1:</strong> We start with how many hours your team spends each month on infrastructure tasks. If you provided this in Stage 4, we use your numbers. Otherwise, we estimate based on your team size:
+                <strong className="text-foreground">Step 1:</strong> We start with how many hours
+                your team spends each month on infrastructure tasks. If you provided this in Stage
+                4, we use your numbers. Otherwise, we estimate based on your team size:
               </p>
               <ul className="list-disc pl-5 space-y-1">
-                <li>Authentication: {formatNumber(roiSummary.breakdown.auth.hoursBefore)} hours/month</li>
-                <li>Database management: {formatNumber(roiSummary.breakdown.database.hoursBefore)} hours/month</li>
-                <li>API development: {formatNumber(roiSummary.breakdown.api.hoursBefore)} hours/month</li>
-                <li>DevOps and infrastructure: {formatNumber(roiSummary.breakdown.devops.hoursBefore)} hours/month</li>
+                <li>
+                  Authentication: {formatNumber(roiSummary.breakdown.auth.hoursBefore)} hours/month
+                </li>
+                <li>
+                  Database management: {formatNumber(roiSummary.breakdown.database.hoursBefore)}{' '}
+                  hours/month
+                </li>
+                <li>
+                  API development: {formatNumber(roiSummary.breakdown.api.hoursBefore)} hours/month
+                </li>
+                <li>
+                  DevOps and infrastructure: {formatNumber(roiSummary.breakdown.devops.hoursBefore)}{' '}
+                  hours/month
+                </li>
               </ul>
               <p>
-                <strong className="text-foreground">Step 2:</strong> We estimate how much time Supabase saves you in each area. Based on typical customer experiences, we apply these reduction percentages:
+                <strong className="text-foreground">Step 2:</strong> We estimate how much time
+                Supabase saves you in each area. Based on typical customer experiences, we apply
+                these reduction percentages:
               </p>
               <ul className="list-disc pl-5 space-y-1">
-                <li>Authentication: {Math.round(roiSummary.breakdown.auth.reductionPct * 100)}% reduction = {formatNumber(roiSummary.breakdown.auth.hoursRecovered)} hours/month recovered</li>
-                <li>Database management: {Math.round(roiSummary.breakdown.database.reductionPct * 100)}% reduction = {formatNumber(roiSummary.breakdown.database.hoursRecovered)} hours/month recovered</li>
-                <li>API development: {Math.round(roiSummary.breakdown.api.reductionPct * 100)}% reduction = {formatNumber(roiSummary.breakdown.api.hoursRecovered)} hours/month recovered</li>
-                <li>DevOps and infrastructure: {Math.round(roiSummary.breakdown.devops.reductionPct * 100)}% reduction = {formatNumber(roiSummary.breakdown.devops.hoursRecovered)} hours/month recovered</li>
+                <li>
+                  Authentication: {Math.round(roiSummary.breakdown.auth.reductionPct * 100)}%
+                  reduction = {formatNumber(roiSummary.breakdown.auth.hoursRecovered)} hours/month
+                  recovered
+                </li>
+                <li>
+                  Database management:{' '}
+                  {Math.round(roiSummary.breakdown.database.reductionPct * 100)}% reduction ={' '}
+                  {formatNumber(roiSummary.breakdown.database.hoursRecovered)} hours/month recovered
+                </li>
+                <li>
+                  API development: {Math.round(roiSummary.breakdown.api.reductionPct * 100)}%
+                  reduction = {formatNumber(roiSummary.breakdown.api.hoursRecovered)} hours/month
+                  recovered
+                </li>
+                <li>
+                  DevOps and infrastructure:{' '}
+                  {Math.round(roiSummary.breakdown.devops.reductionPct * 100)}% reduction ={' '}
+                  {formatNumber(roiSummary.breakdown.devops.hoursRecovered)} hours/month recovered
+                </li>
               </ul>
               <p>
-                <strong className="text-foreground">Step 3:</strong> We add up all the recovered hours ({formatNumber(roiSummary.hoursRecoveredPerMonth)} hours/month) and multiply by your hourly cost rate to get the dollar value: {formatUsd(roiSummary.valueRecoveredPerMonthUsd)}/month, or {formatUsd(roiSummary.valueRecoveredPerYearUsd)} per year.
+                <strong className="text-foreground">Step 3:</strong> We add up all the recovered
+                hours ({formatNumber(roiSummary.hoursRecoveredPerMonth)} hours/month) and multiply
+                by your hourly cost rate to get the dollar value:{' '}
+                {formatUsd(roiSummary.valueRecoveredPerMonthUsd)}/month, or{' '}
+                {formatUsd(roiSummary.valueRecoveredPerYearUsd)} per year.
               </p>
             </div>
           </div>
@@ -165,7 +212,11 @@ export default function ReportView({
         <div className="flex items-start justify-between gap-2">
           <h3 className="text-foreground text-lg">Competitive comparison</h3>
           <p className="text-foreground-lighter text-xs">
-            Pricing as of {new Date(authComparison.snapshot.as_of).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            Pricing as of{' '}
+            {new Date(authComparison.snapshot.as_of).toLocaleDateString('en-US', {
+              month: 'long',
+              year: 'numeric',
+            })}
           </p>
         </div>
         <div className="border rounded-lg overflow-hidden">
@@ -175,7 +226,12 @@ export default function ReportView({
             <div className="p-2 text-foreground-lighter text-right">Annual</div>
             <div className="p-2 text-foreground-lighter text-right">Notes</div>
           </div>
-          <Row provider="Supabase" monthly={estimate.totalMonthlyUsd} annual={annualSupabase} notes={`Recommended: ${recommended.toUpperCase()}`} />
+          <Row
+            provider="Supabase"
+            monthly={estimate.totalMonthlyUsd}
+            annual={annualSupabase}
+            notes={`Recommended: ${recommended.toUpperCase()}`}
+          />
           {authComparison.firebaseMonthlyUsd != null ? (
             <RowWithSources
               provider="Firebase"
@@ -226,7 +282,11 @@ export default function ReportView({
         </div>
         <div className="flex flex-col gap-2 text-foreground-lighter text-xs">
           <p>
-            <strong>Note:</strong> Pricing estimates vary by provider model. Auth providers (Firebase, Auth0, Clerk) are based on authentication costs. Full-stack providers (Convex, AWS) are modeled based on typical usage patterns for database, storage, bandwidth, and compute. See source links and detailed assumptions below for full pricing details.
+            <strong>Note:</strong> Pricing estimates vary by provider model. Auth providers
+            (Firebase, Auth0, Clerk) are based on authentication costs. Full-stack providers
+            (Convex, AWS) are modeled based on typical usage patterns for database, storage,
+            bandwidth, and compute. See source links and detailed assumptions below for full pricing
+            details.
           </p>
           <details className="cursor-pointer">
             <summary className="text-brand hover:text-brand-600">View detailed assumptions</summary>
@@ -316,7 +376,12 @@ function RowWithSources({
           <span className="line-clamp-1">{notes}</span>
           <div className="flex gap-1">
             {sourceUrls.map((url, idx) => (
-              <Link key={idx} href={url} target="_blank" className="underline text-brand hover:text-brand-600 text-xs">
+              <Link
+                key={idx}
+                href={url}
+                target="_blank"
+                className="underline text-brand hover:text-brand-600 text-xs"
+              >
                 Source{sourceUrls.length > 1 ? ` ${idx + 1}` : ''}
               </Link>
             ))}
@@ -341,4 +406,3 @@ function RowLink({ provider, href }: { provider: string; href: string }) {
     </div>
   )
 }
-
