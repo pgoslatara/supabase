@@ -14,10 +14,10 @@ import {
 
 export const THRESHOLD_FOR_AUTO_QUERYING_BUCKET_LIMITS = 10_000
 
-const getBucketNumberEstimateKey = (projectRef: string | undefined) =>
+export const getBucketNumberEstimateKey = (projectRef: string | undefined) =>
   getLiveTupleEstimateKey(projectRef, 'buckets', 'storage')
 
-const getBucketNumberEstimate = async ({
+export const getBucketNumberEstimate = async ({
   projectRef,
   connectionString,
 }: ConnectionVars): Promise<number | undefined> => {
